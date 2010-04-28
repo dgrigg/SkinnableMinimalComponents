@@ -1,0 +1,10 @@
+This is an extension of the Minimal Components set created by Keith Peters (http://www.minimalcomps.com/). The components are super lightweight however they lack the ability to be easily skinned (http://www.bit-101.com/blog/?p=2535). 
+
+In order to make the components more flexible from a visual standpoint yet retain the minimal footprint a basic set of classes for drawing shapes and fills and the required logic to handle skinning was added. If you have worked with Flex 4 or Degrafa it should be quite obvious how the components and skins interact and how skins are created. 
+
+Documentation coming soon.
+
+As of 4/28/2010 only the Label, PushButton, Checkbox, Text, HSlider and VSlider have been refactored to use skinning. 
+
+Derrick Grigg
+www.dgrigg.com
