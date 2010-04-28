@@ -1,0 +1,14 @@
+package assets.images
+{
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	
+	[Embed(source="/assets/images/top-header.png")]
+	public class TopHeaderBitmap extends Bitmap
+	{
+		public function TopHeaderBitmap(bitmapData:BitmapData=null, pixelSnapping:String="auto", smoothing:Boolean=false)
+		{
+			super(bitmapData, pixelSnapping, smoothing);
+		}
+	}
+}

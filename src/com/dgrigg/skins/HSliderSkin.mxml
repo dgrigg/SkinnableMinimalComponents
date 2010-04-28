@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+HSliderSkin.mxml
+Derrick Grigg
+www.dgrigg.com
+version 0.0.1
+
+Custom HSlider skin using shapes.
+
+Copyright (c) 2010 Derrick Grigg
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->
+<skins:Skin xmlns:fx="http://ns.adobe.com/mxml/2009"  
+			xmlns:skins="com.dgrigg.minimalcomps.skins.*"
+			xmlns:comp="com.bit101.components.*" 
+			xmlns:flash="flash.display.*"
+			xmlns:text="flash.text.*" 
+			xmlns:graphics="com.dgrigg.minimalcomps.graphics.*"  >
+	
+	<fx:Script>
+		<![CDATA[
+			import com.bit101.components.Component;
+			import com.bit101.components.HSlider;
+			import com.dgrigg.utils.Logger;
+			
+			protected var _hostComponent:HSlider;
+			
+			override public function set hostComponent(value:Component):void 
+			{
+				_hostComponent = value as HSlider;
+			}
+			
+			override public function get hostComponent():Component 
+			{
+				return _hostComponent as Component;
+			}
+			
+			override protected function draw():void 
+			{
+				super.draw();
+				
+				
+				width = _hostComponent.width;
+				height = _hostComponent.height;
+				
+				if (back)
+				{
+					back.width = width;
+					back.height = height;
+				}
+				
+				if (handle)
+				{
+					handle.width = height-2;
+					handle.height = height-2;
+				}
+				
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<graphics:Rect id="back" name="back" width="10" height="10" topLeftRadius="10" topRightRadius="10" bottomLeftRadius="10" bottomRightRadius="10" >
+		
+		<graphics:stroke>
+			<graphics:SolidStroke color="0x000000" alpha="1" thickness="1"/>
+		</graphics:stroke>
+		<graphics:fill>
+			<graphics:GradientFill id="fill" rotation="90" type="{GradientType.LINEAR}">
+				<graphics:GradientItem color="0x000000" alpha="1" ratio="0"/>
+				<graphics:GradientItem color="0x999999" alpha="1" ratio="255"/>
+				
+			</graphics:GradientFill>
+		</graphics:fill>
+		
+	</graphics:Rect>
+	
+	<graphics:Ellipse id="handle" name="handle" y="1"  >
+		
+		<graphics:fill>
+			<graphics:SolidFill color="0xFFFFFF" alpha="1"/>
+		</graphics:fill>
+	</graphics:Ellipse>
+	
+	
+</skins:Skin>
