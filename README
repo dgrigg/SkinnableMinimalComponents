@@ -2,6 +2,9 @@ This is an extension of the Minimal Components set created by Keith Peters (http
 
 In order to make the components more flexible from a visual standpoint yet retain the minimal footprint a basic set of classes for drawing shapes and fills and the required logic to handle skinning was added. If you have worked with Flex 4 or Degrafa it should be quite obvious how the components and skins interact and how skins are created. 
 
+The demo application, SkinTest.mxml is a pure AS3 application, even though it has the mmxl extension, the Flex framework was not used to create the application. It was used to simplify the creation (using markup vs script). It should also be more familiar to Flex developers. You can read this post to see how to setup projects to use this method, http://www.dgrigg.com/post.cfm/04/12/2010/When-Flex-goes-on-a-SlimFast-diet
+
+
 Documentation coming soon.
 
 As of 4/28/2010 only the Label, PushButton, Checkbox, Text, HSlider and VSlider have been refactored to use skinning. 
