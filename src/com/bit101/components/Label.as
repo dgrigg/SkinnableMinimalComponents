@@ -34,7 +34,7 @@ package com.bit101.components
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
-	import com.dgrigg.utils.Logger;
+	
 	
 	public class Label extends Component
 	{

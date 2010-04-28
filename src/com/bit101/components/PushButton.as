@@ -63,7 +63,6 @@ package com.bit101.components
 		public function PushButton(parent:DisplayObjectContainer = null, xpos:Number = 0, ypos:Number =  0, label:String = "", defaultHandler:Function = null)
 		{
 			skinClass = com.dgrigg.minimalcomps.skins.PushButtonSkin;
-			
 			super(parent, xpos, ypos);
 			
 			

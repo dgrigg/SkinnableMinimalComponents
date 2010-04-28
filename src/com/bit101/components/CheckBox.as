@@ -109,22 +109,12 @@ package com.bit101.components
 		override public function draw():void
 		{
 			super.draw();
-			/*
-			_back.graphics.clear();
-			_back.graphics.beginFill(Style.BACKGROUND);
-			_back.graphics.drawRect(0, 0, 10, 10);
-			_back.graphics.endFill();
 			
-			_button.graphics.clear();
-			_button.graphics.beginFill(Style.BUTTON_FACE);
-			_button.graphics.drawRect(2, 2, 6, 6);
+			if (_label)
+			{
+				_width = _label.width + 12;
+			}
 			
-			_label.text = _labelText;
-			_label.draw();
-			_label.x = 12;
-			_label.y = (10 - _label.height) / 2;
-			*/
-			_width = _label.width + 12;
 			_height = 10;
 		}
 		

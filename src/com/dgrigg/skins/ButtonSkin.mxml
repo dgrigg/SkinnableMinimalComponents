@@ -156,15 +156,6 @@ THE SOFTWARE.
 	
 	<comp:Label id="label" name="label"/>
 	
-	<graphics:Path data="C 10 0 10 10 0 10">
-		<graphics:stroke>
-			<graphics:SolidStroke color="0xff9900" thickness="2"/>
-		</graphics:stroke>
-	</graphics:Path>
-	
-	
-	
 
- 	
 
 </skins:Skin>

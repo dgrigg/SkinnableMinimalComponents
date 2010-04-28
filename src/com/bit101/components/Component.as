@@ -44,6 +44,8 @@ package com.bit101.components
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.filters.DropShadowFilter;
+	
+	import com.dgrigg.utils.Logger;
 
 	public class Component extends Sprite
 	{
@@ -78,6 +80,8 @@ package com.bit101.components
 		 */
 		public function Component(parent:DisplayObjectContainer = null, xpos:Number = 0, ypos:Number =  0)
 		{
+			addEventListener(Event.ADDED_TO_STAGE, onAdded, false, 0, true);
+			
 			move(xpos, ypos);
 			if(parent != null)
 			{
@@ -92,7 +96,6 @@ package com.bit101.components
 		protected function init():void
 		{
 			addChildren();
-			addEventListener(Event.ADDED_TO_STAGE, onAdded, false, 0, true);
 		}
 		
 		public function set skinClass (cls:Class):void 
@@ -187,7 +190,6 @@ package com.bit101.components
 		public function draw():void
 		{
 			dispatchEvent(new Event(Component.DRAW));
-			
 			
 			if (_skin)
 			{
@@ -296,16 +298,16 @@ package com.bit101.components
 				
 			}
 			
-				_skin = value;
-				
-				_skin.hostComponent = this;// as IHostComponent;
-				
-				_skin.addEventListener(SkinPartEvent.PART_ADDED, onPartAdded, false, 0, true);
-				
-				//get existing skins parts
-				getSkinParts();
-				addChild(_skin);
-				invalidate();
+			_skin = value;
+			
+			_skin.hostComponent = this;// as IHostComponent;
+			
+			_skin.addEventListener(SkinPartEvent.PART_ADDED, onPartAdded, false, 0, true);
+			
+			//get existing skins parts
+			getSkinParts();
+			addChild(_skin);
+			invalidate();
 			
 		}
 		
