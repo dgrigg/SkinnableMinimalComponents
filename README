@@ -16,7 +16,35 @@ In Flash Builder (Flex Builder) create a new AS3 Project. After the setup is don
 
 Documentation coming soon.
 
-As of 4/28/2010 only the Label, PushButton, Checkbox, Text, HSlider and VSlider have been refactored to use skinning. 
+Creating new skins
+------------------
+When creating a new skin there are a few things to keep in mind:
+
+1. You need to extend the com.dgrigg.minimalcomps.skins.Skin class
+
+2. If you want the hostComponent to be aware of the skin parts when they are added, you need to give each skin part a name, either in the markup or programmatically: 
+<comp:Label id="label" name="skinLabel"/>
+
+or
+
+var label:Label = new Label(); 
+label.name = "skinLabel";
+
+the name value is how you can differentiate the skin parts in the component as they are added, see the 'skinPartAdded' method in com.bit101.components.Component
+
+3. In the skin you can access the host component via the 'hostComponent' property
+
+4. To apply a skin to a component
+<comp:PushButton skinClass="com.dgrigg.skins.ButtonImageSkin"/>
+
+or
+
+button.skinClass = com.dgrigg.skins.ButtonImageSkin;
+
+
+Releases
+--------
+4/28/2010 Label, PushButton, Checkbox, Text, HSlider and VSlider have been refactored to use skinning. 
 
 Derrick Grigg
 www.dgrigg.com

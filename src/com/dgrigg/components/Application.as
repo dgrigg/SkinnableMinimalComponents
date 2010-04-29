@@ -28,8 +28,11 @@
  */
 package com.dgrigg.components
 {
-	import flash.display.DisplayObjectContainer;
 	import com.bit101.components.Component;
+	
+	import flash.display.DisplayObjectContainer;
+	import flash.events.Event;
+	
 	
 	public class Application extends Container
 	{

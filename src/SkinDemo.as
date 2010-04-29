@@ -30,6 +30,7 @@
 package
 {
 	import com.bit101.components.*;
+	import com.dgrigg.skins.ButtonImageSkin;
 	
 	import flash.display.Sprite;
 	
@@ -49,8 +50,12 @@ package
 			
 			label.text = "Hello World";
 			
+			
 			var button:PushButton = new PushButton(vbox);
-			button.label = "Push me";
+			button.skinClass = com.dgrigg.skins.ButtonImageSkin;
+			button.label = "Push me to";
+			//vbox.addChild(button);
+			
 			
 			var checkbox:CheckBox = new CheckBox(vbox);
 			checkbox.label = "Check me";

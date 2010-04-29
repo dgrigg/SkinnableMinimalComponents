@@ -89,7 +89,7 @@ THE SOFTWARE.
 	
 	<text:TextField id="tf" x="2" y="2" embedFonts="true">
 		<text:defaultTextFormat>
-			<text:TextFormat size="{Style.fontSize}" color="{Style.LABEL_TEXT}" font="{Style.fontName}" />
+			<text:TextFormat size="8" color="0x666666" font="PF Ronda Seven" />
 			
 		</text:defaultTextFormat>
 	</text:TextField>

@@ -41,7 +41,7 @@ THE SOFTWARE.
 		<bit101:HSlider  height="20" width="100" y="110"/>
 		<bit101:Text height="20" width="100" y="150" text="Hello World"/>
 	</comp:Container>	
-	
+	<!--
 	<comp:Container x="150" y="0" height="400">
 		<bit101:Label text="Drawing API Skins"/>
 		<bit101:PushButton label="Test Button" width="100" height="20" y="30" skinClass="com.dgrigg.skins.ButtonSkin"/>
@@ -58,6 +58,7 @@ THE SOFTWARE.
 		<bit101:HSlider height="20" width="100" y="110" skinClass="com.dgrigg.skins.HSliderImageSkin" horzGutter="-5"/>
 		<bit101:Text height="20" width="100" y="150" text="Hello World" skinClass="com.dgrigg.skins.TextImageSkin"/>		
 	</comp:Container>
+	-->
 	
 	
 </comp:Application>

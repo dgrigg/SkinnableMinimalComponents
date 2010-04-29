@@ -35,6 +35,7 @@ package com.bit101.components
 {
 	import com.dgrigg.minimalcomps.events.SkinPartEvent;
 	import com.dgrigg.minimalcomps.skins.Skin;
+	import com.dgrigg.utils.Logger;
 	
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
@@ -44,8 +45,6 @@ package com.bit101.components
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.filters.DropShadowFilter;
-	
-	import com.dgrigg.utils.Logger;
 
 	public class Component extends Sprite
 	{
@@ -69,6 +68,7 @@ package com.bit101.components
 		protected var _enabled:Boolean = true;
 		
 		protected var _skin:Skin;
+		protected var _added:Boolean = false;
 		
 		public static const DRAW:String = "draw";
 
@@ -101,6 +101,12 @@ package com.bit101.components
 		public function set skinClass (cls:Class):void 
 		{
 			_skinClass = cls;
+			
+			if (_added)
+			{
+				skin = new skinClass();
+			}
+			
 		}
 		
 		public function get skinClass():Class
@@ -113,6 +119,7 @@ package com.bit101.components
 			//wait until component is added to stage to skin it
 			if (skinClass)
 			{
+				_added = true;
 				skin = new skinClass();
 			}
 			
