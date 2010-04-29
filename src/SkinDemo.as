@@ -47,15 +47,12 @@ package
 			
 			
 			var label:Label = new Label(vbox);
-			
-			label.text = "Hello World";
-			
+			label.text = "Hello World";	
 			
 			var button:PushButton = new PushButton(vbox);
 			button.skinClass = com.dgrigg.skins.ButtonImageSkin;
 			button.label = "Push me to";
-			//vbox.addChild(button);
-			
+	
 			
 			var checkbox:CheckBox = new CheckBox(vbox);
 			checkbox.label = "Check me";
