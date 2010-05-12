@@ -1,11 +1,12 @@
 /**
- * HScrollBar.as
- * Keith Peters
- * version 0.9.2
+ * ListSkin.as
+ * Derrick Grigg
+ * www.dgrigg.com
+ * version 0.0.1
  * 
- * A horizontal scroll bar for use in other components. 
+ * Default ListSkin skin.
  * 
- * Copyright (c) 2010 Keith Peters
+ * Copyright (c) 2010 Derrick Grigg
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,26 +27,54 @@
  * THE SOFTWARE.
  */
 
-package com.bit101.components
+package com.dgrigg.minimalcomps.skins
 {
-	import com.dgrigg.minimalcomps.skins.HScrollBarSkin;
-	
-	import flash.display.DisplayObjectContainer;
-	
-	/**
-	 * Constructor
-	 * @param parent The parent DisplayObjectContainer on which to add this ScrollBar.
-	 * @param xpos The x position to place this component.
-	 * @param ypos The y position to place this component.
-	 * @param defaultHandler The event handling function to handle the default event for this component (change in this case).
-	 */
-	public class HScrollBar extends ScrollBar
+	import com.bit101.components.Panel;
+	import com.bit101.components.ScrollBar;
+	import com.bit101.components.VScrollBar;
+
+	public class ListSkin extends Skin
 	{
-		public function HScrollBar(parent:DisplayObjectContainer=null, xpos:Number=0, ypos:Number=0, defaultHandler:Function=null)
+		public var scrollBar:ScrollBar;
+		public var panel:Panel;
+		
+		public function ListSkin()
 		{
-			skinClass = com.dgrigg.minimalcomps.skins.HScrollBarSkin
+			super();
+		}
+		
+		override protected function createChildren():void 
+		{
 			
-			super(Slider.HORIZONTAL, parent, xpos, ypos, defaultHandler);
+			
+			panel = new Panel();
+			panel.name = "panel";
+			panel.color = 0xFFFFFF;
+			addChild(panel);
+			
+			scrollBar = new VScrollBar();
+			scrollBar.name = "scrollBar";
+			addChild(scrollBar);
+			
+		}
+		
+		override protected function draw():void 
+		{
+			super.draw();
+			
+			if (panel)
+			{
+				panel.setSize(_width, _height);
+				panel.draw();
+			}
+			
+			if (scrollBar)
+			{
+				scrollBar.x = _width - 10;
+				
+				scrollBar.height = _height;
+				scrollBar.draw();
+			}
 		}
 	}
 }

@@ -28,12 +28,16 @@
 
 package com.bit101.components
 {
+	import com.dgrigg.minimalcomps.skins.TextAreaSkin;
+	import com.dgrigg.utils.Logger;
+	
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
 	
 	public class TextArea extends Text
 	{
 		protected var _scrollbar:VScrollBar;
+		private var _dirtyScroller:Boolean = false;
 		
 		/**
 		 * Constructor
@@ -44,31 +48,66 @@ package com.bit101.components
 		 */
 		public function TextArea(parent:DisplayObjectContainer=null, xpos:Number=0, ypos:Number=0, text:String="")
 		{
+			skinClass = com.dgrigg.minimalcomps.skins.TextAreaSkin;
 			super(parent, xpos, ypos, text);
+			
 		}
 		
 		/**
 		 * Creates and adds the child display objects of this component.
 		 */
+		/*
 		override protected function addChildren():void
 		{
 			super.addChildren();
-			_scrollbar = new VScrollBar(this, 0, 0, onScrollbarScroll);
-			_tf.addEventListener(Event.SCROLL, onTextScroll);
+			
 		}
+		*/
 		
 		/**
 		 * Changes the thumb percent of the scrollbar based on how much text is shown in the text area.
 		 */
 		protected function updateScrollbar():void
 		{
-			var visibleLines:int = _tf.numLines - _tf.maxScrollV + 1;
-			var percent:Number = visibleLines / _tf.numLines;
-			_scrollbar.setSliderParams(1, _tf.maxScrollV, _tf.scrollV);
-			_scrollbar.setThumbPercent(percent);
-			_scrollbar.pageSize = visibleLines;
+			if (_tf)
+			{
+				var visibleLines:int = _tf.numLines - _tf.maxScrollV + 1;
+				var percent:Number = visibleLines / _tf.numLines;
+				
+				if (_scrollbar)
+				{
+					_scrollbar.setSliderParams(1, _tf.maxScrollV, _tf.scrollV);
+					_scrollbar.setThumbPercent(percent);
+					_scrollbar.pageSize = visibleLines;
+					
+					_dirtyScroller = true;
+					invalidate();
+					
+				}
+			}
+			
+			
+			
 		}
 		
+		
+		override protected function skinPartAdded(part:String, instance:Object):void
+		{
+			super.skinPartAdded(part, instance);
+			
+			switch (part)
+			{
+				case "textField":
+					_tf.addEventListener(Event.SCROLL, onTextScroll);
+					_tf.addEventListener(Event.CHANGE, onChange);
+					
+					break;
+				case "scrollBar":
+					_scrollbar = instance as VScrollBar;
+					_scrollbar.addEventListener(Event.CHANGE, onScrollbarScroll);
+					break;
+			}
+		}
 		
 		
 		
@@ -83,12 +122,12 @@ package com.bit101.components
 		{
 			super.draw();
 			
-			_tf.width = _width - _scrollbar.width - 4;
-			_scrollbar.x = _width - _scrollbar.width;
-			_scrollbar.height = _height;
-			_scrollbar.draw();
+			_skin.validate();
+			
 			addEventListener(Event.ENTER_FRAME, onTextScrollDelay);
+			
 		}
+			
 		
 		
 		
@@ -103,7 +142,11 @@ package com.bit101.components
 		protected function onTextScrollDelay(event:Event):void
 		{
 			removeEventListener(Event.ENTER_FRAME, onTextScrollDelay);
-			updateScrollbar();
+			if (_dirtyScroller)
+			{
+				updateScrollbar();
+			}
+			_dirtyScroller = false;
 		}
 		
 		/**
@@ -120,7 +163,10 @@ package com.bit101.components
 		 */
 		protected function onScrollbarScroll(event:Event):void
 		{
-			_tf.scrollV = Math.round(_scrollbar.value);
+			if (_tf && _scrollbar)
+			{
+				_tf.scrollV = Math.round(_scrollbar.value);
+			}
 		}
 		
 		/**
@@ -128,8 +174,11 @@ package com.bit101.components
 		 */
 		protected function onTextScroll(event:Event):void
 		{
-			_scrollbar.value = _tf.scrollV;
-			updateScrollbar();
+			if (_tf && _scrollbar)
+			{
+				_scrollbar.value = _tf.scrollV;
+				updateScrollbar();
+			}
 		}
 	}
 }

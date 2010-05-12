@@ -183,7 +183,6 @@ package com.dgrigg.minimalcomps.skins
 		
 		protected function draw():void 
 		{
-			
 			width = hostComponent.width;
 			height = hostComponent.height;
 			

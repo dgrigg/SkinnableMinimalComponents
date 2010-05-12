@@ -64,13 +64,12 @@ THE SOFTWARE.
 				{
 					back.width = width;
 					back.height = 10;
-					//back.height = height;
 				}
 				
 				if (handle)
 				{
-					//handle.width = height-2;
-					//handle.height = height-2;
+					handle.width = 25;
+					handle.height = 25;
 				}
 				
 			}

@@ -1,10 +1,10 @@
 /**
- * LabelSkin.as
+ * VScrollSliderSkin.as
  * Derrick Grigg
  * www.dgrigg.com
  * version 0.0.1
  * 
- * Default Label skin.
+ * Default VScrollSlider skin.
  * 
  * Copyright (c) 2010 Derrick Grigg
  * 
@@ -30,19 +30,18 @@
 package com.dgrigg.minimalcomps.skins
 {
 	import com.bit101.components.Component;
-	import com.bit101.components.Label;
 	import com.bit101.components.Style;
+	import com.bit101.components.VScrollSlider;
+	import com.dgrigg.minimalcomps.graphics.Rect;
+	import com.dgrigg.minimalcomps.graphics.SolidFill;
+	import com.dgrigg.minimalcomps.graphics.SolidStroke;
 	import com.dgrigg.utils.Logger;
-	
-	import flash.text.TextField;
-	import flash.text.TextFieldAutoSize;
-	import flash.text.TextFormat;
-
-	public class LabelSkin extends Skin
+	public class VScrollSliderSkin extends Skin
 	{
-		public var label:TextField;
+		public var back:Rect;
+		public var handle:Rect;
 		
-		public function LabelSkin()
+		public function VScrollSliderSkin()
 		{
 			super();
 		}
@@ -51,29 +50,50 @@ package com.dgrigg.minimalcomps.skins
 		{
 			super.createChildren();
 			
-			label = new TextField();
-			label.name = "label";
-			label.height = _height;
+			back = new Rect();
+			back.filters = [getShadow(2, true)];
+			back.name = "back";
+			var fill:SolidFill = new SolidFill();
+			fill.color = Style.BACKGROUND;
+			back.fill = fill;
 			
-			label.embedFonts = Style.embedFonts;
-			label.selectable = false;
-			label.mouseEnabled = false;
-			var tf:TextFormat =  new TextFormat(Style.fontName, Style.fontSize, Style.LABEL_TEXT);
-			label.defaultTextFormat = tf;
+			addChild(back);
 			
-			addChild(label);
+			handle = new Rect();
+			handle.filters = [getShadow(1)];
+			fill = new SolidFill();
+			fill.color = Style.BUTTON_FACE;
+			handle.fill = fill;
+			handle.x = 1;
+			handle.y = 1;
+			handle.name = "handle";
+			handle.buttonMode = true;
+			handle.useHandCursor = true;
+			addChild(handle);
+			
+			invalidate();
 			
 		}
 		
 		
+		
 		override protected function draw():void 
 		{
-			
 			super.draw();
-						
-			var host:Label = hostComponent as Label;
-			label.text = host.text;
 			
+			
+			if (back)
+			{
+				back.width = width;
+				back.height = height;
+			}
+			
+			if (handle)
+			{
+				var host:VScrollSlider = hostComponent as VScrollSlider;
+				handle.width = width-2;
+				handle.height = host.getThumbPercent() * height;
+			}
 			
 		}
 	}

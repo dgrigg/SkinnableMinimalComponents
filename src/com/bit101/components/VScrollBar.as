@@ -28,6 +28,8 @@
 
 package com.bit101.components
 {
+	import com.dgrigg.minimalcomps.skins.VScrollBarSkin;
+	
 	import flash.display.DisplayObjectContainer;
 	
 	public class VScrollBar extends ScrollBar
@@ -41,6 +43,8 @@ package com.bit101.components
 		 */
 		public function VScrollBar(parent:DisplayObjectContainer=null, xpos:Number=0, ypos:Number=0, defaultHandler:Function=null)
 		{
+			skinClass = com.dgrigg.minimalcomps.skins.VScrollBarSkin;
+			
 			super(Slider.VERTICAL, parent, xpos, ypos, defaultHandler);
 		}
 	}

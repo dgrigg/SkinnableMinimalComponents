@@ -28,10 +28,16 @@
 
 package com.bit101.components
 {
+	import com.dgrigg.minimalcomps.skins.ListSkin;
+	
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	
+	import com.dgrigg.utils.Logger;
+	
+	
 	
 	public class List extends Component
 	{
@@ -55,6 +61,9 @@ package com.bit101.components
 		 */
 		public function List(parent:DisplayObjectContainer=null, xpos:Number=0, ypos:Number=0, items:Array=null)
 		{
+			skinClass = com.dgrigg.minimalcomps.skins.ListSkin;
+			
+			
 			if(items != null)
 			{
 				_items = items;
@@ -63,6 +72,8 @@ package com.bit101.components
 			{
 				_items = new Array();
 			}
+			
+			
 			super(parent, xpos, ypos);
 		}
 		
@@ -75,18 +86,6 @@ package com.bit101.components
 			setSize(100, 100);
 		}
 		
-		/**
-		 * Creates and adds the child display objects of this component.
-		 */
-		protected override function addChildren() : void
-		{
-			super.addChildren();
-			_panel = new Panel(this, 0, 0);
-			_panel.color = _defaultColor;
-			_itemHolder = new Sprite();
-			_panel.content.addChild(_itemHolder);
-			_scrollbar = new VScrollBar(this, 0, 0, onScroll);
-		}
 		
 		/**
 		 * Creates all the list items based on data.
@@ -97,21 +96,10 @@ package com.bit101.components
 
 			for(var i:int = 0; i < _items.length; i++)
 			{
-//				var label:String = "";
-//				if(_items[i] is String)
-//				{
-//					label = _items[i];
-//				}
-//				else if(_items[i].label is String)
-//				{
-//					label = _items[i].label;
-//				}
+
 				var item:ListItem = new _listItemClass(_itemHolder, 0, i * _listItemHeight, _items[i]);
 				item.setSize(width, _listItemHeight);
-				item.defaultColor = _defaultColor;
-				item.selectedColor = _selectedColor;
-				item.rolloverColor = _rolloverColor;
-				item.addEventListener(MouseEvent.CLICK, onSelect);
+				item.addEventListener(MouseEvent.CLICK, onSelect, false, 0, true);
 				if(i == _selectedIndex)
 				{
 					item.selected = true;
@@ -142,6 +130,22 @@ package com.bit101.components
 			}
 		}
 		
+		override protected function skinPartAdded(part:String, instance:Object):void 
+		{
+			super.skinPartAdded(part, instance);
+			switch (part)
+			{
+				case "scrollBar":
+					_scrollbar = instance as VScrollBar;
+					_scrollbar.addEventListener(Event.CHANGE, onScroll, false, 0, true);
+					break;
+				case "panel":
+					_panel = instance as Panel;
+					_itemHolder = _panel.content;
+					break;
+			}
+		}
+		
 		
 		
 		///////////////////////////////////
@@ -153,6 +157,13 @@ package com.bit101.components
 		 */
 		public override function draw() : void
 		{
+			// scrollbar settings
+			var contentHeight:Number = _items.length * _listItemHeight;
+			_scrollbar.setThumbPercent(_height / contentHeight); 
+			var pageSize:Number = _height / _listItemHeight;
+			_scrollbar.setSliderParams(0, Math.max(0, _items.length - pageSize), _itemHolder.y / _listItemHeight);
+			_scrollbar.pageSize = pageSize;
+			
 			super.draw();
 			
 			_selectedIndex = Math.min(_selectedIndex, _items.length - 1);
@@ -161,20 +172,6 @@ package com.bit101.components
 			makeListItems();
 			scrollToSelection();
 			
-			// panel
-			_panel.setSize(_width, _height);
-			_panel.color = _defaultColor;
-			_panel.draw();
-			
-			// scrollbar
-			_scrollbar.x = _width - 10;
-			var contentHeight:Number = _items.length * _listItemHeight;
-			_scrollbar.setThumbPercent(_height / contentHeight); 
-			var pageSize:Number = _height / _listItemHeight;
-			_scrollbar.setSliderParams(0, Math.max(0, _items.length - pageSize), _itemHolder.y / _listItemHeight);
-			_scrollbar.pageSize = pageSize;
-			_scrollbar.height = _height;
-			_scrollbar.draw();
 		}
 		
 		/**
@@ -230,10 +227,6 @@ package com.bit101.components
 			invalidate();
 		}
 		
-		
-		
-		
-		
 		///////////////////////////////////
 		// event handlers
 		///////////////////////////////////
@@ -243,14 +236,16 @@ package com.bit101.components
 		 */
 		protected function onSelect(event:Event):void
 		{
-			if(! (event.target is ListItem)) return;
+			
+			if(! (event.currentTarget is ListItem)) return;
 			
 			for(var i:int = 0; i < _itemHolder.numChildren; i++)
 			{
-				if(_itemHolder.getChildAt(i) == event.target) _selectedIndex = i;
+				if(_itemHolder.getChildAt(i) == event.currentTarget) _selectedIndex = i;
 				ListItem(_itemHolder.getChildAt(i)).selected = false;
 			}
-			ListItem(event.target).selected = true;
+			
+			ListItem(event.currentTarget).selected = true;
 			dispatchEvent(new Event(Event.SELECT));
 		}
 		
@@ -362,7 +357,16 @@ package com.bit101.components
 		 */
 		public function set items(value:Array):void
 		{
-			_items = value;
+			if (value)
+			{
+				_items = value;
+			}
+			else
+			{
+				_items = new Array();
+			}
+		
+			
 			invalidate();
 		}
 		public function get items():Array
@@ -373,6 +377,7 @@ package com.bit101.components
 		/**
 		 * Sets / gets the class used to render list items. Must extend ListItem.
 		 */
+		
 		public function set listItemClass(value:Class):void
 		{
 			_listItemClass = value;
@@ -382,6 +387,7 @@ package com.bit101.components
 		{
 			return _listItemClass;
 		}
+		
 
 		
 	}

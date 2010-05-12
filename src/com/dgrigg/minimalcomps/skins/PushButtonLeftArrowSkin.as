@@ -1,10 +1,10 @@
 /**
- * LabelSkin.as
+ * PushButtonLeftArrowSkin.as
  * Derrick Grigg
  * www.dgrigg.com
  * version 0.0.1
  * 
- * Default Label skin.
+ * Default PushButtonLeftArrow skin.
  * 
  * Copyright (c) 2010 Derrick Grigg
  * 
@@ -30,19 +30,24 @@
 package com.dgrigg.minimalcomps.skins
 {
 	import com.bit101.components.Component;
-	import com.bit101.components.Label;
+	import com.bit101.components.PushButton;
 	import com.bit101.components.Style;
+	import com.dgrigg.minimalcomps.graphics.Path;
+	import com.dgrigg.minimalcomps.graphics.Rect;
+	import com.dgrigg.minimalcomps.graphics.SolidFill;
+	import com.dgrigg.minimalcomps.graphics.SolidStroke;
 	import com.dgrigg.utils.Logger;
 	
-	import flash.text.TextField;
-	import flash.text.TextFieldAutoSize;
-	import flash.text.TextFormat;
+	import flash.display.Bitmap;
+	import flash.events.Event;
 
-	public class LabelSkin extends Skin
+	public class PushButtonLeftArrowSkin extends Skin
 	{
-		public var label:TextField;
+		public var back:Rect;
+		public var face:Rect;
+		public var arrow:Path;
 		
-		public function LabelSkin()
+		public function PushButtonLeftArrowSkin()
 		{
 			super();
 		}
@@ -51,17 +56,33 @@ package com.dgrigg.minimalcomps.skins
 		{
 			super.createChildren();
 			
-			label = new TextField();
-			label.name = "label";
-			label.height = _height;
+			var stroke:SolidStroke;
+			var fill:SolidFill;
 			
-			label.embedFonts = Style.embedFonts;
-			label.selectable = false;
-			label.mouseEnabled = false;
-			var tf:TextFormat =  new TextFormat(Style.fontName, Style.fontSize, Style.LABEL_TEXT);
-			label.defaultTextFormat = tf;
+			back = new Rect();
+			fill = new SolidFill();
+			fill.color = Style.BACKGROUND;
+			back.fill = fill;
+			back.filters = [getShadow(2, true)];
+			addChild(back);
 			
-			addChild(label);
+			face = new Rect();
+			fill = new SolidFill();
+			fill.color = Style.BUTTON_FACE;
+			face.x = 1;
+			face.y = 1;
+			face.filters = [getShadow(1)];
+			face.fill = fill;
+			addChild(face);
+			
+			arrow = new Path();
+			arrow.data = "M 3 5 L 7 3 L 7 7";
+			fill = new SolidFill();
+			fill.color = Style.DROPSHADOW;
+			arrow.fill = fill;
+			addChild(arrow);
+			
+			invalidate();
 			
 		}
 		
@@ -70,9 +91,34 @@ package com.dgrigg.minimalcomps.skins
 		{
 			
 			super.draw();
-						
-			var host:Label = hostComponent as Label;
-			label.text = host.text;
+			
+			if (back)
+			{
+				back.width = width;
+				back.height = height;
+			
+				back.validate();
+			}
+			
+			if (face)
+			{
+				face.width = width-2;
+				face.height = height-2;
+			
+				face.validate();
+				
+				if (currentState == "up" ||  currentState == "over")
+				{
+				
+					face.filters = [getShadow(1)];
+				} 
+				else if (currentState == "down")
+				{
+					face.filters = [getShadow(1, true)];
+				}
+			}
+			
+			
 			
 			
 		}

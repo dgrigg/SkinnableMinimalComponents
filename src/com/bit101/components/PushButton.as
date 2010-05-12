@@ -91,13 +91,23 @@ package com.bit101.components
 		{
 			super.addChildren();
 			
-			
 			addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 			addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
 			
 			
 		}
 		
+		override protected function skinPartAdded(part:String, instance:Object):void 
+		{
+			
+			super.skinPartAdded(part, instance);
+			
+			if (part == "label")
+			{
+				buttonLabel = instance as Label;
+				buttonLabel.text = label;
+			}
+		}
 		
 		
 		
@@ -113,7 +123,25 @@ package com.bit101.components
 			super.draw();
 		}
 		
-		
+		override public function getCurrentSkinState():String 
+		{
+			if (_selected)
+			{
+				return "selected";
+			}
+			else if (_down)
+			{
+				return "down";
+			}
+			else if (_over)
+			{
+				return "over";
+			}
+			else
+			{
+				return "up";
+			}
+		}
 		
 		
 		///////////////////////////////////
@@ -189,6 +217,10 @@ package com.bit101.components
 		public function set label(str:String):void
 		{
 			_labelText = str;
+			if (buttonLabel)
+			{
+				buttonLabel.text = _labelText;
+			}
 			draw();
 		}
 		public function get label():String
@@ -219,40 +251,6 @@ package com.bit101.components
 		public function get toggle():Boolean
 		{
 			return _toggle;
-		}
-		
-		
-		
-		override public function getCurrentSkinState():String 
-		{
-			if (_selected)
-			{
-				return "selected";
-			}
-			else if (_down)
-			{
-				return "down";
-			}
-			else if (_over)
-			{
-				return "over";
-			}
-			else
-			{
-				return "up";
-			}
-		}
-		
-		override protected function skinPartAdded(part:String, instance:Object):void 
-		{
-			
-			super.skinPartAdded(part, instance);
-			
-			if (part == "label")
-			{
-				buttonLabel = instance as Label;
-				buttonLabel.text = label;
-			}
 		}
 		
 		

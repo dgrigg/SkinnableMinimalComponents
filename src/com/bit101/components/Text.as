@@ -55,7 +55,10 @@ package com.bit101.components
 		 */
 		public function Text(parent:DisplayObjectContainer = null, xpos:Number = 0, ypos:Number =  0, text:String = "")
 		{
-			this.skinClass = com.dgrigg.minimalcomps.skins.TextSkin;
+			if (skinClass == null)
+			{
+				this.skinClass = com.dgrigg.minimalcomps.skins.TextSkin;
+			}
 			this.text = text;
 			super(parent, xpos, ypos);
 			setSize(200, 100);

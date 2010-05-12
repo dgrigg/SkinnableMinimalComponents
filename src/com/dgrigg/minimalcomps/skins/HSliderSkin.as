@@ -35,10 +35,10 @@ package com.dgrigg.minimalcomps.skins
 	import com.dgrigg.minimalcomps.graphics.Rect;
 	import com.dgrigg.minimalcomps.graphics.SolidFill;
 	import com.dgrigg.minimalcomps.graphics.SolidStroke;
+	
 
 	public class HSliderSkin extends Skin
 	{
-		protected var _hostComponent:HSlider;
 		public var back:Rect;
 		public var handle:Rect;
 		
@@ -82,8 +82,6 @@ package com.dgrigg.minimalcomps.skins
 		{
 			super.draw();
 			
-			width = hostComponent.width;
-			height = hostComponent.height;
 			
 			if (back)
 			{

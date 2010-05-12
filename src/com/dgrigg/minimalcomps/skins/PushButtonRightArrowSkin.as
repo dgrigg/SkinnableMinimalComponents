@@ -1,10 +1,10 @@
 /**
- * CheckBoxSkin.as
+ * PushButtonRightArrowSkin.as
  * Derrick Grigg
  * www.dgrigg.com
  * version 0.0.1
  * 
- * Default Checkbox skin.
+ * Default PushButtonRightArrow skin.
  * 
  * Copyright (c) 2010 Derrick Grigg
  * 
@@ -29,65 +29,98 @@
 
 package com.dgrigg.minimalcomps.skins
 {
-	import com.bit101.components.CheckBox;
 	import com.bit101.components.Component;
-	import com.bit101.components.Label;
+	import com.bit101.components.PushButton;
 	import com.bit101.components.Style;
+	import com.dgrigg.minimalcomps.graphics.Path;
 	import com.dgrigg.minimalcomps.graphics.Rect;
 	import com.dgrigg.minimalcomps.graphics.SolidFill;
+	import com.dgrigg.minimalcomps.graphics.SolidStroke;
+	import com.dgrigg.utils.Logger;
+	
+	import flash.display.Bitmap;
+	import flash.events.Event;
 
-	public class CheckBoxSkin extends Skin
+	public class PushButtonRightArrowSkin extends Skin
 	{
-		public var label:Label;
 		public var back:Rect;
-		public var button:Rect;
+		public var face:Rect;
+		public var arrow:Path;
 		
-		public function CheckBoxSkin()
+		public function PushButtonRightArrowSkin()
 		{
 			super();
 		}
 		
 		override protected function createChildren():void
 		{
-			back = new Rect();
+			super.createChildren();
 			
-			var fill:SolidFill = new SolidFill();
+			var stroke:SolidStroke;
+			var fill:SolidFill;
+			
+			back = new Rect();
+			fill = new SolidFill();
 			fill.color = Style.BACKGROUND;
 			back.fill = fill;
-			back.width = 10;
-			back.height = 10;
 			back.filters = [getShadow(2, true)];
 			addChild(back);
 			
-			button = new Rect();
-			button.x = 2;
-			button.y = 2;
-			button.height = 6;
-			button.width = 6;
+			face = new Rect();
 			fill = new SolidFill();
 			fill.color = Style.BUTTON_FACE;
-			button.fill = fill;
-			button.filters = [getShadow(1)];
-			button.visible = false;
-			addChild(button);
+			face.x = 1;
+			face.y = 1;
+			face.filters = [getShadow(1)];
+			face.fill = fill;
+			addChild(face);
 			
-			label = new Label();
-			label.name = "label";
-			addChild(label);
+			arrow = new Path();
+			//arrow.data = "M 3 5 L 6 3 L 6 7";
+			arrow.data = "M 3 3 L 7 5 L 3 7";
+			fill = new SolidFill();
+			fill.color = Style.DROPSHADOW;
+			arrow.fill = fill;
+			addChild(arrow);
+			
+			invalidate();
+			
 		}
-		
 		
 		
 		override protected function draw():void 
 		{
+			
 			super.draw();
 			
+			if (back)
+			{
+				back.width = width;
+				back.height = height;
 			
-			button.visible = currentState == "selected";
+				back.validate();
+			}
+			
+			if (face)
+			{
+				face.width = width-2;
+				face.height = height-2;
+			
+				face.validate();
+				
+				if (currentState == "up" ||  currentState == "over")
+				{
+				
+					face.filters = [getShadow(1)];
+				} 
+				else if (currentState == "down")
+				{
+					face.filters = [getShadow(1, true)];
+				}
+			}
 			
 			
-			label.x = 12;
-			label.y = (10 - label.height) / 2;
+			
 			
 		}
 	}

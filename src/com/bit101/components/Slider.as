@@ -35,12 +35,14 @@ package com.bit101.components
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	
+	import com.dgrigg.utils.Logger;
+	
 	[Event(name="change", type="flash.events.Event")]
 	public class Slider extends Component
 	{
 		protected var _handle:Sprite;
-		private var _back:Sprite;
-		private var _backClick:Boolean = true;
+		protected var _back:Sprite;
+		protected var _backClick:Boolean = true;
 		protected var _value:Number = 0;
 		protected var _max:Number = 100;
 		protected var _min:Number = 0;
@@ -49,6 +51,9 @@ package com.bit101.components
 		
 		protected var _vertGutter:int = 1;
 		protected var _horzGutter:int = 1;
+		
+		protected var _thumbWidth:int = 10;
+		protected var _thumbHeight:int = 10;
 		
 		public static const HORIZONTAL:String = "horizontal";
 		public static const VERTICAL:String = "vertical";
@@ -88,17 +93,7 @@ package com.bit101.components
 			}
 		}
 		
-		/**
-		 * Creates and adds the child display objects of this component.
-		 */
-		override protected function addChildren():void
-		{
-			
-		}
-		
-		
-		
-		
+	
 		
 		/**
 		 * Adjusts value to be within minimum and maximum.
@@ -140,9 +135,6 @@ package com.bit101.components
 					_handle.y = (_height - _width - (_value - _min) / (_max - _min) * range) - _vertGutter;
 				}
 			}
-			
-		
-			
 		}
 		
 		
@@ -217,13 +209,28 @@ package com.bit101.components
 			stage.addEventListener(MouseEvent.MOUSE_MOVE, onSlide);
 			if(_orientation == HORIZONTAL)
 			{
-				_handle.startDrag(false, new Rectangle(_horzGutter, _vertGutter, _width - _height - (_horzGutter*2) , 0));
+				_handle.startDrag(false, new Rectangle(_horzGutter, _vertGutter, _width - _handle.width - (_horzGutter*2) , 0));
 			}
 			else
 			{
-				_handle.startDrag(false, new Rectangle(_horzGutter, _vertGutter, 0, _height - _width - (_vertGutter*2)));
+				_handle.startDrag(false, new Rectangle(_horzGutter, _vertGutter, 0, _height - _handle.height - (_vertGutter*2)));
 			}
 		}
+		/*
+		protected override function onDrag(event:MouseEvent):void
+		{
+			stage.addEventListener(MouseEvent.MOUSE_UP, onDrop);
+			stage.addEventListener(MouseEvent.MOUSE_MOVE, onSlide);
+			if(_orientation == HORIZONTAL)
+			{
+				_handle.startDrag(false, new Rectangle(0, 0, _width - _handle.width, 0));
+			}
+			else
+			{
+				_handle.startDrag(false, new Rectangle(0, 0, 0, _height - _handle.height));
+			}
+		}
+		*/
 		
 		/**
 		 * Internal mouseUp handler. Stops dragging the handle.
@@ -263,7 +270,6 @@ package com.bit101.components
 		override protected function skinPartAdded(part:String, instance:Object):void 
 		{
 			super.skinPartAdded(part, instance);
-			
 			
 			if (part == "handle")
 			{
@@ -387,7 +393,6 @@ package com.bit101.components
 		{
 			return _horzGutter
 		}
-		
 		
 		
 	}

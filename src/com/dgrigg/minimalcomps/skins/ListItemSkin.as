@@ -1,10 +1,10 @@
 /**
- * LabelSkin.as
+ * ListItemSkin.as
  * Derrick Grigg
  * www.dgrigg.com
  * version 0.0.1
  * 
- * Default Label skin.
+ * Default ListItemSkin skin.
  * 
  * Copyright (c) 2010 Derrick Grigg
  * 
@@ -29,50 +29,84 @@
 
 package com.dgrigg.minimalcomps.skins
 {
-	import com.bit101.components.Component;
 	import com.bit101.components.Label;
-	import com.bit101.components.Style;
+	import com.bit101.components.ListItem;
+	import com.dgrigg.minimalcomps.graphics.Rect;
+	import com.dgrigg.minimalcomps.graphics.SolidFill;
 	import com.dgrigg.utils.Logger;
-	
-	import flash.text.TextField;
-	import flash.text.TextFieldAutoSize;
-	import flash.text.TextFormat;
 
-	public class LabelSkin extends Skin
+	public class ListItemSkin extends Skin
 	{
-		public var label:TextField;
+		public var label:Label;
+		public var back:Rect;
 		
-		public function LabelSkin()
+		protected var _defaultColor:uint = 0xffffff;
+		protected var _selectedColor:uint = 0xdddddd;
+		protected var _rolloverColor:uint = 0xeeeeee;
+		
+		public function ListItemSkin()
 		{
 			super();
 		}
 		
-		override protected function createChildren():void
+		override protected function createChildren():void 
 		{
-			super.createChildren();
+			back = new Rect();
+			var fill:SolidFill = new SolidFill();
+			back.fill = fill;
+			addChild(back);
 			
-			label = new TextField();
+			label = new Label();
 			label.name = "label";
-			label.height = _height;
-			
-			label.embedFonts = Style.embedFonts;
-			label.selectable = false;
-			label.mouseEnabled = false;
-			var tf:TextFormat =  new TextFormat(Style.fontName, Style.fontSize, Style.LABEL_TEXT);
-			label.defaultTextFormat = tf;
-			
 			addChild(label);
 			
 		}
 		
-		
 		override protected function draw():void 
 		{
-			
 			super.draw();
-						
-			var host:Label = hostComponent as Label;
-			label.text = host.text;
+			var host:ListItem = hostComponent as ListItem;
+			
+			if (label)
+			{
+				label.x = 5;
+				
+				if(host.data is String)
+				{
+					label.text = host.data as String;
+				}
+				else if(host.data.label is String)
+				{
+					label.text = host.data.label;
+				}
+				else
+				{
+					label.text = host.data.toString();
+				}
+			}
+			
+			if (back)
+			{
+				back.height = height;
+				back.width = width;
+				var fill:SolidFill = back.fill as SolidFill;
+				
+				if (currentState == "selected")
+				{
+					fill.color = _selectedColor;
+				}
+				else if (currentState == "over")
+				{
+					fill.color = _rolloverColor;
+				}
+				else 
+				{
+					fill.color = _defaultColor;
+				}
+				
+				back.validate();
+				
+			}
 			
 			
 		}

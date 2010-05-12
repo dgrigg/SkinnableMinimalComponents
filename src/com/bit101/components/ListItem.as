@@ -29,16 +29,22 @@
 
 package com.bit101.components
 {
+	import com.dgrigg.minimalcomps.skins.ListItemSkin;
+	
 	import flash.display.DisplayObjectContainer;
 	import flash.events.MouseEvent;
+	
+	import com.dgrigg.utils.Logger;
 	
 	public class ListItem extends Component
 	{
 		protected var _data:Object;
+		
+		//skin part
 		protected var _label:Label;
-		protected var _defaultColor:uint = 0xffffff;
-		protected var _selectedColor:uint = 0xdddddd;
-		protected var _rolloverColor:uint = 0xeeeeee;
+		//end skin part
+		
+		
 		protected var _selected:Boolean;
 		protected var _mouseOver:Boolean = false;
 		
@@ -51,7 +57,10 @@ package com.bit101.components
 		 */
 		public function ListItem(parent:DisplayObjectContainer=null, xpos:Number=0, ypos:Number=0, data:Object = null)
 		{
+			skinClass = com.dgrigg.minimalcomps.skins.ListItemSkin;
+			
 			_data = data;
+			
 			super(parent, xpos, ypos);
 		}
 		
@@ -66,12 +75,36 @@ package com.bit101.components
 		}
 		
 		/**
-		 * Creates and adds the child display objects of this component.
+		 * handle skin parts as they are added
 		 */
-		protected override function addChildren() : void
+		override protected function skinPartAdded(part:String, instance:Object):void 
 		{
-			super.addChildren();
-			_label = new Label(this, 5, 0);
+			super.skinPartAdded(part, instance);
+			switch (part)
+			{
+				case "label":
+					_label = instance as Label;
+					break;
+			}
+		}
+		
+		/**
+		 * determine the current state for the skin to display
+		 */
+		override public function getCurrentSkinState():String 
+		{
+			if (_selected)
+			{
+				return "selected";
+			}
+			else if (_mouseOver)
+			{
+				return "over";
+			}
+			else
+			{
+				return "up";
+			}
 		}
 		
 		///////////////////////////////////
@@ -85,33 +118,10 @@ package com.bit101.components
 		{
 			super.draw();
 			graphics.clear();
-			if(_selected)
-			{
-				graphics.beginFill(_selectedColor);
-			}
-			else if(_mouseOver)
-			{
-				graphics.beginFill(_rolloverColor);
-			}
-			else
-			{
-				graphics.beginFill(_defaultColor);
-			}
-			graphics.drawRect(0, 0, width, height);
-			graphics.endFill();
-			if(_data is String)
-			{
-				_label.text = _data as String;
-			}
-			else if(_data.label is String)
-			{
-				_label.text = _data.label;
-			}
-			else
-			{
-				_label.text = _data.toString();
-			}
+			
 		}
+		
+		
 		
 		
 		
@@ -175,6 +185,7 @@ package com.bit101.components
 		/**
 		 * Sets/gets the default background color of list items.
 		 */
+		/*
 		public function set defaultColor(value:uint):void
 		{
 			_defaultColor = value;
@@ -184,10 +195,12 @@ package com.bit101.components
 		{
 			return _defaultColor;
 		}
+		*/
 		
 		/**
 		 * Sets/gets the selected background color of list items.
 		 */
+		/*
 		public function set selectedColor(value:uint):void
 		{
 			_selectedColor = value;
@@ -197,10 +210,12 @@ package com.bit101.components
 		{
 			return _selectedColor;
 		}
+		*/
 		
 		/**
 		 * Sets/gets the rollover background color of list items.
 		 */
+		/*
 		public function set rolloverColor(value:uint):void
 		{
 			_rolloverColor = value;
@@ -210,6 +225,7 @@ package com.bit101.components
 		{
 			return _rolloverColor;
 		}
+		*/
 		
 	}
 }

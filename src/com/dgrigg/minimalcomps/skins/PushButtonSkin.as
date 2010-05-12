@@ -97,22 +97,22 @@ package com.dgrigg.minimalcomps.skins
 			
 			super.draw();
 			
-			width = hostComponent.width;
-			height = hostComponent.height;
-			
-			face.width = width-2;
-			face.height = height-2;
-			
-			face.validate();
-			
-			back.width = width;
-			back.height = height;
-			
-			back.validate();
+			if (back)
+			{
+				back.width = width;
+				back.height = height;
+				
+				back.validate();
+			}
 			
 			
 			if (face)
 			{
+				face.width = width-2;
+				face.height = height-2;
+			
+				face.validate();
+				
 				if (currentState == "up" ||  currentState == "over")
 				{
 				
@@ -136,7 +136,7 @@ package com.dgrigg.minimalcomps.skins
 				
 				if (currentState == "over")
 				{
-					tf.color = 0xff0000;
+					tf.color = 0x000000;
 				}
 				else
 				{

@@ -1,10 +1,10 @@
 /**
- * LabelSkin.as
+ * VScrollBarSkin.as
  * Derrick Grigg
  * www.dgrigg.com
  * version 0.0.1
  * 
- * Default Label skin.
+ * Default VScrollBarSkin skin.
  * 
  * Copyright (c) 2010 Derrick Grigg
  * 
@@ -30,19 +30,24 @@
 package com.dgrigg.minimalcomps.skins
 {
 	import com.bit101.components.Component;
-	import com.bit101.components.Label;
+	import com.bit101.components.PushButton;
 	import com.bit101.components.Style;
+	import com.bit101.components.VScrollBar;
+	import com.bit101.components.VScrollSlider;
+	import com.bit101.components.VSlider;
+	import com.dgrigg.minimalcomps.graphics.Rect;
+	import com.dgrigg.minimalcomps.graphics.SolidFill;
+	import com.dgrigg.minimalcomps.graphics.SolidStroke;
 	import com.dgrigg.utils.Logger;
-	
-	import flash.text.TextField;
-	import flash.text.TextFieldAutoSize;
-	import flash.text.TextFormat;
 
-	public class LabelSkin extends Skin
+	public class VScrollBarSkin extends Skin
 	{
-		public var label:TextField;
 		
-		public function LabelSkin()
+		public var scrollSlider:VScrollSlider;
+		public var upButton:PushButton;
+		public var downButton:PushButton;
+		
+		public function VScrollBarSkin()
 		{
 			super();
 		}
@@ -51,28 +56,50 @@ package com.dgrigg.minimalcomps.skins
 		{
 			super.createChildren();
 			
-			label = new TextField();
-			label.name = "label";
-			label.height = _height;
+			scrollSlider = new VScrollSlider();
+			scrollSlider.name = "scrollSlider";
+			addChild(scrollSlider);
 			
-			label.embedFonts = Style.embedFonts;
-			label.selectable = false;
-			label.mouseEnabled = false;
-			var tf:TextFormat =  new TextFormat(Style.fontName, Style.fontSize, Style.LABEL_TEXT);
-			label.defaultTextFormat = tf;
+			upButton = new PushButton();
+			upButton.name = "upButton";
+			upButton.skinClass = com.dgrigg.minimalcomps.skins.PushButtonUpArrowSkin;
+			addChild(upButton);
 			
-			addChild(label);
+			downButton = new PushButton();
+			downButton.name = "downButton";
+			downButton.skinClass = com.dgrigg.minimalcomps.skins.PushButtonDownArrowSkin;
+			addChild(downButton);
+			
+			invalidate();
 			
 		}
 		
 		
+		
 		override protected function draw():void 
 		{
-			
 			super.draw();
-						
-			var host:Label = hostComponent as Label;
-			label.text = host.text;
+			
+			if (upButton)
+			{
+				upButton.width = width;
+				upButton.height = width;
+			}
+			
+			if (downButton)
+			{
+				downButton.width = width;
+				downButton.height = width;
+				downButton.y = height - width;
+			}
+			
+			if (scrollSlider)
+			{
+				scrollSlider.width = width;
+				scrollSlider.height = height - upButton.height - downButton.height;
+				scrollSlider.y = upButton.y + upButton.height;
+				
+			}
 			
 			
 		}
