@@ -37,7 +37,7 @@ package com.bit101.components
 	
 	import com.dgrigg.utils.Logger;
 	
-	
+	[Event(name="select", type="flash.events.Event")]
 	
 	public class List extends Component
 	{

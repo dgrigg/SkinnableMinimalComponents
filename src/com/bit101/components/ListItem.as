@@ -57,7 +57,10 @@ package com.bit101.components
 		 */
 		public function ListItem(parent:DisplayObjectContainer=null, xpos:Number=0, ypos:Number=0, data:Object = null)
 		{
-			skinClass = com.dgrigg.minimalcomps.skins.ListItemSkin;
+			if (skinClass == null)
+			{
+				skinClass = com.dgrigg.minimalcomps.skins.ListItemSkin;
+			}
 			
 			_data = data;
 			

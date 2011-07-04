@@ -75,8 +75,9 @@ THE SOFTWARE.
 			</bit101:items>
 		</bit101:ComboBox>
 		
-		
-		<bit101:TextArea height="100" width="100" y="340" text="Lorem ipsum"/>
+		<bit101:TextArea height="100" width="100" y="340">
+			<bit101:text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur adipiscing viverra mattis. Nam egestas laoreet massa, a convallis velit commodo eu. Aenean fringilla volutpat lorem, nec euismod nunc aliquam nec. Maecenas cursus libero sit amet metus scelerisque placerat. Duis libero tortor, congue sit amet scelerisque vel, tempus dictum erat. Vestibulum dignissim sodales nunc, eget auctor nunc blandit nec.</bit101:text>
+		</bit101:TextArea>
 		
 	</comp:Container>	
 	
@@ -96,6 +97,7 @@ THE SOFTWARE.
 		<bit101:HSlider height="20" width="100" y="110" skinClass="com.dgrigg.skins.HSliderImageSkin" horzGutter="-5"/>
 		<bit101:Text height="20" width="100" y="150" text="Hello World" skinClass="com.dgrigg.skins.TextImageSkin"/>		
 	</comp:Container>
+	
 	
 	
 	
